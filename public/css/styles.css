@@ -1,0 +1,17 @@
+@font-face {
+    font-family: Montserrat;
+    src: url('../font/montserrat.otf');
+}
+*{
+    font-family: Montserrat, sans-serif;
+}
+.spoiler{
+    color: black; 
+    background-color:black;
+}
+.spoiler:hover{
+    background-color: white;
+}
+.signin input{
+    margin: 10px;
+}

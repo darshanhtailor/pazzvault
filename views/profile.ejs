@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="/css/styles.css">
+<h2>Hello <%= name %>! Welcome to PazzVault</h2>
+<a href="/">Home</a>
+<form action="/logout?_method=DELETE" method="POST">
+    <button type="submit">Log Out</button>
+</form>
+<hr>
+<div>
+    <a href="/profile/addcred">Add Credential</a>
+    <p>Your Credentials:</p>
+    <div id="userCreds">
+
+    </div>
+</div>
+<script>
+    const userCreds = document.getElementById('userCreds')
+    fetch('/profile/getcreds',{
+        method: 'GET'
+    })
+    .then(res => res.json())
+    .then((creds)=>{
+        creds.forEach(cred => {
+            let div = document.createElement('div')
+            div.className = 'credBox'
+            div.style.width = '300px'
+            div.style.height = '100px'
+            div.style.backgroundColor = 'whitesmoke'
+            div.style.borderRadius = '7px'
+            div.style.margin = '10px'
+            div.style.padding = '5px'
+
+            let website = document.createElement('div')
+            website.style.margin = '5px'
+            website.innerHTML = `Website: ${cred.website}`
+            div.appendChild(website)
+
+            let username = document.createElement('div')
+            username.style.margin = '5px'
+            username.innerHTML = `Username: ${cred.username}`
+            div.appendChild(username)
+
+            let password = document.createElement('div')
+            password.style.margin = '5px'
+            password.innerHTML = `Password: <span class="spoiler">${cred.password}</span>`
+            div.appendChild(password)
+
+            userCreds.appendChild(div)
+        });
+    })
+    .catch((e)=>{
+        console.log(e)
+    })
+</script>

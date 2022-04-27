@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="/css/styles.css">
+<h2>Hello <%= name %>! Welcome to PazzVault</h2>
+<a href="/">Home</a>
+<form action="/logout?_method=DELETE" method="POST">
+    <button type="submit">Log Out</button>
+</form>
+<hr>
+<h3>Generate Password</h3>
+<p>(To also save the generated password, go to 'Add Credential' page from profile.)</p>
+<button onclick="makeid()">Generate Now</button>
+<div id="generated">
+
+</div>
+
+<script>
+    const generated = document.getElementById('generated')
+
+    const makeid = ()=>{
+        let length = Math.floor(Math.random() * 6 + 7)
+        let result = ''
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#*!%'
+        const chlen = characters.length
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * chlen))
+        }      
+        generated.innerHTML = `Your Secure Password is ${result}`
+    }
+</script>

@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="/css/styles.css">
+<h2>Hello <%= name %>! Welcome to PazzVault</h2>
+<a href="/">Home</a>
+<form action="/logout?_method=DELETE" method="POST">
+    <button type="submit">Log Out</button>
+</form>
+<hr>
+<script>
+    const cookieMatch = document.cookie.match(/^(.*;)?\s*vault\s*=\s*[^;]+(.*)?$/)
+    if(cookieMatch){
+        console.log('here')
+        window.location.pathname = '/vault/access'
+    }
+</script>
+<form class="signin" action="/verifyotp" method="POST">
+    <button type="button" onclick="generateOTP()">Generate OTP</button>
+    <div style="display: flex; align-items: center;">
+        <label for="password">OTP</label>
+        <input name="otp" type="password" id="otp-submit" required>
+        <img src="/img/view.png" id="eye" alt="View" width="25px" onclick="visibility()">
+    </div>
+    <input type="submit">
+</form>
+<script>
+    const pass = document.getElementById('otp-submit')
+    const visibility = ()=>{
+        if(pass.type == 'password'){
+            pass.type = 'text'
+            eye.src = '/img/not-view.png'
+        } else{
+            pass.type = 'password'
+            eye.src = '/img/view.png'
+        }
+    }
+
+    const generateOTP = ()=>{
+        fetch('/sendmail', {
+            method: 'POST'
+        })
+        .then((res)=>{
+            alert('OTP sent')
+        })
+    }
+</script>
