@@ -1,25 +1,26 @@
 <link rel="stylesheet" href="/css/styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cryptojs/3.1.2/rollups/aes.js"></script>
-<h2>Hello <%= name %>! Welcome to PazzVault</h2>
-<a href="/">Home</a>
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
-<hr>
-<form id="credForm" action="/addcred" method="post">  <!--/addcred-->
+<%- include('partials/header') %>
+<div class="Container">
+    <%- include('partials/sidebar') %>
     <div>
-        <input type="text" placeholder="Website" name="website">
+        <h2 style="margin: 10px 0px 0px 10px;">Add Credential</h2>
+        <form style="margin: 10px 0px 0px 10px;" id="credForm" action="/addcred" method="post" class="signin">  <!--/addcred-->
+            <div>
+                <input type="text" placeholder="Website" name="website">
+            </div>
+            <div>
+                <input type="text" placeholder="Username" name="username" required>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <input id="password" type="password" placeholder="Password" name="password" required>
+                <img src="/img/view.png" id="eye" alt="View" width="25px" onclick="visibility()">
+                <button type="button" onclick="makeid()">Generate Now</button>       
+            </div>
+            <input type="submit">
+        </form>
     </div>
-    <div>
-        <input type="text" placeholder="Username" name="username" required>
-    </div>
-    <div style="display: flex; align-items: center;">
-        <input id="password" type="password" placeholder="Password" name="password" required>
-        <img src="/img/view.png" id="eye" alt="View" width="25px" onclick="visibility()">
-        <button type="button" onclick="makeid()">Generate Now</button>       
-    </div>
-    <input type="submit">
-</form>
+</div>
 <script>
     const generated = document.getElementById('password')
     const eye = document.getElementById('eye')

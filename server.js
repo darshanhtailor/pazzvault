@@ -9,7 +9,9 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+const multer = require('multer')
 const path = require('path')
+const fs = require('fs')
 const cookieParser = require('cookie-parser') //--> added
 const mongoose = require('mongoose')
 const User = require('./models/user')
@@ -43,13 +45,21 @@ app.use(methodOverride('_method'))
 
 const publicDir = path.join(__dirname, '/public')
 app.use(express.static(publicDir))
+app.use(express.static('uploads'))
 
 app.get('/', checkAuthenticated, (req, res) => {
-	res.render('index.ejs', { name: req.user.name })
+	res.redirect('/profile')
+	res.send()
+	// res.render('index.ejs', {
+	// 	name: req.user.name,
+	// 	isAuth: req.isAuthenticated()
+	// })
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
-	res.render('login.ejs')
+	res.render('login.ejs',{
+		isAuth: req.isAuthenticated()
+	})
 })
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
@@ -59,7 +69,9 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
-	res.render('register.ejs')
+	res.render('register.ejs',{
+		isAuth: req.isAuthenticated()
+	})
 })
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
@@ -85,11 +97,17 @@ app.delete('/logout', (req, res) => {
 })
 
 app.get('/profile', checkAuthenticated, (req, res)=>{
-	res.render('profile.ejs', {name: req.user.name})
+	res.render('profile.ejs', {
+		name: req.user.name,
+		isAuth: req.isAuthenticated()
+	})
 })
 
 app.get('/profile/addcred', checkAuthenticated, (req, res)=>{
-	res.render('addcredpage.ejs', {name: req.user.name})
+	res.render('addcredpage.ejs', {
+		name: req.user.name,
+		isAuth: req.isAuthenticated()
+	})
 })
 
 app.post('/addcred', checkAuthenticated, async(req, res)=>{
@@ -119,15 +137,17 @@ app.get('/profile/getcreds', checkAuthenticated, async(req, res)=>{
 })
 
 app.get('/generatepass', checkAuthenticated, async(req, res)=>{
-	res.render('generatePass.ejs', { name:req.user.name })
+	res.render('generatePass.ejs', {
+		name:req.user.name,
+		isAuth: req.isAuthenticated() 
+	})
 })
 
 app.get('/vault', checkAuthenticated, async(req, res)=>{
-	res.render('vault.ejs', {name: req.user.name})
-})
-
-app.get('/vault/access', checkAuthenticated, async(req, res)=>{
-	res.render('vaultAccess.ejs', {name: req.user.name})
+	res.render('vault.ejs', {
+		name: req.user.name,
+		isAuth: req.isAuthenticated()
+	})
 })
 
 app.post('/sendmail', checkAuthenticated, async(req, res)=>{
@@ -164,8 +184,43 @@ app.post('/verifyotp', checkAuthenticated, async(req, res)=>{
 	}
 })
 
-app.get('/breach', checkAuthenticated, async(req, res)=>{
-	res.render('breach.ejs', { name: req.user.name })
+app.get('/vault/access', checkAuthenticated, async(req, res)=>{
+	res.render('vaultAccess.ejs', {
+		name: req.user.name,
+		userid: req.user._id,
+		isAuth: req.isAuthenticated()
+	})
+})
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname))
+    }
+})
+
+const maxSize = 10 * 1000 * 1000    
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: maxSize },  
+}).single('userfile');
+
+app.post("/uploadFile", checkAuthenticated, async(req, res, next)=>{
+    upload(req,res,(err)=> {  
+        if(err) {
+            res.send(err)
+        }
+        else {
+            res.send('File uploaded successfully')
+        }
+    })
+})
+
+app.get('/getfiles', checkAuthenticated, (req, res)=>{
+	const files = fs.readdirSync('uploads/')
+	res.send(files)
 })
 
 function checkAuthenticated(req, res, next) {

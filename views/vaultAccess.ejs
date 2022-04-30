@@ -1,9 +1,48 @@
 <link rel="stylesheet" href="/css/styles.css">
-<h2>Hello <%= name %>! Welcome to PazzVault</h2>
-<a href="/">Home</a>
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
-<hr>
-your vault
-upload files here
+<style>
+    #fileUpForm{
+        border: 1px solid black;
+        padding: 5px;
+        border-radius: 5px;
+    }
+</style>
+<%- include('partials/header') %> 
+<div class="Container">
+    <%- include('partials/sidebar') %>
+    <div>
+        <div style="background-color: rgb(223, 222, 222); padding: 10px;">
+            <h2>Your Vault</h2>   
+            <form action="/uploadFile" id="fileUpForm" enctype="multipart/form-data" method="POST">      
+                <span>Upload File:</span>  
+                <input type="file" name="userfile" required/><br>
+                <input type="submit" value="Upload"> 
+            </form>
+        </div>
+        <div id="userFiles" style="margin: 10px;">
+            <h2>Your Files:</h2>
+
+        </div>
+    </div> 
+</div>
+<script>
+    fetch('/getfiles',{
+        method: 'GET'
+    })
+    .then((res)=>res.json())
+    .then((files)=>{
+        const userFiles = document.getElementById('userFiles')
+        files.forEach(file=>{
+            const div = document.createElement('div')
+            div.innerText = `${file}`
+            div.style.textDecoration='underline'
+            div.style.cursor='pointer'
+
+            div.addEventListener('click', (event)=>{
+                event.preventDefault()
+                window.location.href='http://localhost:3000/'+div.innerText;
+            })
+
+            userFiles.appendChild(div)
+        })
+    })
+</script>

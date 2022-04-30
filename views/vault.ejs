@@ -1,10 +1,4 @@
 <link rel="stylesheet" href="/css/styles.css">
-<h2>Hello <%= name %>! Welcome to PazzVault</h2>
-<a href="/">Home</a>
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
-<hr>
 <script>
     const cookieMatch = document.cookie.match(/^(.*;)?\s*vault\s*=\s*[^;]+(.*)?$/)
     if(cookieMatch){
@@ -12,15 +6,21 @@
         window.location.pathname = '/vault/access'
     }
 </script>
-<form class="signin" action="/verifyotp" method="POST">
-    <button type="button" onclick="generateOTP()">Generate OTP</button>
-    <div style="display: flex; align-items: center;">
-        <label for="password">OTP</label>
-        <input name="otp" type="password" id="otp-submit" required>
-        <img src="/img/view.png" id="eye" alt="View" width="25px" onclick="visibility()">
-    </div>
-    <input type="submit">
-</form>
+<%- include('partials/header')  %>
+<div class="Container">
+    <%- include('partials/sidebar') %>
+    <div style="margin-left: 10px;">
+        <h2 style="margin: 10px 0px;">Secure Vault</h2>
+        <form class="signin" action="/verifyotp" method="POST">
+            <button style="margin: 5px 0px;" type="button" onclick="generateOTP()">Generate OTP</button>
+            <div style="display: flex; align-items: center;">
+                <input name="otp" type="password" id="otp-submit" placeholder="OTP" required>
+                <img src="/img/view.png" id="eye" alt="View" width="25px" onclick="visibility()">
+            </div>
+            <input type="submit">
+        </form>
+    </div> 
+</div>
 <script>
     const pass = document.getElementById('otp-submit')
     const visibility = ()=>{

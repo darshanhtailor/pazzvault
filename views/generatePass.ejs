@@ -1,15 +1,20 @@
 <link rel="stylesheet" href="/css/styles.css">
-<h2>Hello <%= name %>! Welcome to PazzVault</h2>
-<a href="/">Home</a>
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
-<hr>
-<h3>Generate Password</h3>
-<p>(To also save the generated password, go to 'Add Credential' page from profile.)</p>
-<button onclick="makeid()">Generate Now</button>
-<div id="generated">
+<style>
+    #generateBox > *{
+        margin: 10px 0px;
+    }
+</style>
+<%- include('partials/header') %> 
+<div class="Container">
+    <%- include('partials/sidebar') %>
+    <div id="generateBox" style="margin-left: 10px;">
+        <h2>Generate Password</h2>
+        <p>(To also save the generated password, go to 'Add Credential' page from profile.)</p>
+        <button onclick="makeid()">Generate Now</button>
+        <div id="generated">
 
+        </div>
+    </div> 
 </div>
 
 <script>

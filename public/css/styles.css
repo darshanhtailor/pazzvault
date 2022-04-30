@@ -4,7 +4,43 @@
 }
 *{
     font-family: Montserrat, sans-serif;
+    margin: 0;
 }
+
+nav{
+    padding: 10px 25px 15px 25px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid rgb(240, 240, 240);
+}
+#signinButtons{
+    right: 0;
+    margin-left: auto;
+    margin-bottom: 0px;
+}
+.btn{
+    padding: 7px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 3px;
+    border: none;
+    border: 2px solid #17994D;
+    color: #17994D;
+}
+#loginBtn, #logoutBtn{
+    background-color: white;
+    color: #17994D;
+}
+#signupBtn{
+    background-color: #17994D;
+    color: white;
+}
+#signupBtn:hover{
+    border: 2px solid #148543;
+    background-color: #148543;
+}
+
 .spoiler{
     color: black; 
     background-color:black;
@@ -12,6 +48,88 @@
 .spoiler:hover{
     background-color: white;
 }
+.signinDiv{
+    margin: 120px 0px 0px 0px;
+    display: flex;
+    justify-content: space-around;
+}
+.fillersvg{
+    width: 500px;
+}
 .signin input{
-    margin: 10px;
+    margin: 10px 0px;
+    padding: 10px;
+    width: 400px;
+    height: 40px;
+}
+.signin button{
+    margin: 25px 0px;
+}
+#eye{
+    margin: 0px 5px;
+}
+#sidebar{
+    height: 100%;
+    width: 200px;
+    background-color: black;
+    position: relative;
+}
+#sidebar a{
+    text-decoration: none;
+}
+#sidebar div{
+    color: white;
+    cursor: pointer;
+    background-color: #148543;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+#sidebar span{
+    color: rgba(245, 245, 245, 0.651);
+    text-align: center;
+    display: block;
+    width: 93%;
+    position: absolute;
+    bottom: 0;
+}
+.Container{
+    display: flex;
+    height: calc(100% - 64px);
+}
+#userCreds{
+    display: inline-grid;
+    gap: 5px;
+    grid-template-columns: auto auto auto auto;
+}
+#addIcon{
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #148543;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    cursor: pointer;
+    font-size: 30px;
+    color: white;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 100px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    font-size: 10px;
+}
+  
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

@@ -1,0 +1,16 @@
+<nav>
+    <a href="/">
+        <img src="/img/logo.svg" alt="PazzVault">
+    </a>
+    <% if(!isAuth){ %>
+        <div id="signinButtons">
+            <a href="/login"><button class="btn" id="loginBtn">Log In</button></a>
+            <a href="/register"><button class="btn" id="signupBtn">Sign Up</button></a>
+        </div>
+    <% } else{ %> 
+        <form action="/logout?_method=DELETE" method="POST" id="signinButtons">
+            Welcome, <%= name %>! 
+            <button type="submit" class="btn" id="logoutBtn">Log Out</button>
+        </form>
+    <% } %>
+</nav>

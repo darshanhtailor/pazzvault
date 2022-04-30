@@ -1,20 +1,5 @@
 <link rel="stylesheet" href="/css/styles.css">
-<h2>Hello <%= name %>! Welcome to PazzVault</h2>
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
-<hr>
-<div>
-    <div>
-        <a href="/profile">Profile</a>
-    </div>
-    <div>
-        <a href="/generatepass">Generate Password</a>
-    </div>
-    <div>
-        <a href="/vault">Secure Vault</a>
-    </div>
-    <div>
-        <a href="/breach">Check Breach</a>
-    </div>
+<%- include('partials/header') %>
+<div style="height: calc(100% - 64px); display: flex;">
+    <%- include('partials/sidebar') %>
 </div>
